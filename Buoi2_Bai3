@@ -1,0 +1,53 @@
+.data
+so1: .asciiz "Nhap chieu dai: "
+so2: .asciiz "Nhap chieu rong: "
+max: .asciiz "Chu vi = "
+
+line_brk: .asciiz "\n"
+
+ .text
+ main:
+ 
+  #nhap dai
+  la $a0, so1
+  li $v0, 4
+  syscall
+  
+   li $v0, 5
+   syscall
+   move $t0, $v0
+   
+  la $a0, line_brk
+  li $v0, 4
+  syscall
+  
+  #nhap rong
+  la $a0, so2
+  li $v0, 4
+  syscall
+  
+   li $v0, 5
+   syscall
+   move $t1, $v0
+   
+  la $a0, line_brk
+  li $v0, 4
+  syscall
+
+  #tinh cv
+
+  add $t2, $t1, $t0
+  li $t3, 2
+  mult $t2, $t3
+  mflo $t2
+  
+  #xuat kqua
+  la $a0, max
+  li $v0, 4
+  syscall
+  move $a0, $t2
+  li $v0, 1
+  syscall
+    
+  li $v0, 10
+  syscall 
