@@ -1,0 +1,73 @@
+.data
+input: .asciiz "input: "
+output1: .asciiz " chuyen sang ky tu hoa la  "
+output2: .asciiz " khong phai ky tu chu "
+line_break: .asciiz "\n "
+ .text
+ main:
+ #nhap 
+  la $a0, input
+  li $v0, 4
+  syscall
+
+  li $v0, 12
+  syscall
+  move $t0, $v0
+  blt $t0, 'A', kytuhoa
+  bgt $t0, 'Z', kytuhoa
+  
+  la $a0, line_break
+  li $v0, 4
+  syscall
+
+  move $a0, $t1
+  li $v0, 11
+  syscall
+  
+  la $a0, output1
+  li $v0, 4
+  syscall
+   move $a0, $t1
+  li $v0, 11
+  syscall
+  j exit
+  kytuhoa:
+  blt $t0, 'a', notkytu
+  bgt $t0, 'z', notkytu
+  
+  la $a0, line_break
+  li $v0, 4
+  syscall
+  
+  move $a0, $t1
+  li $v0, 11
+  syscall
+  
+  la $a0, output1
+  li $v0, 4
+  syscall
+  
+  move $t1, $t0
+  addi $t1, $t1, -32
+  
+  move $a0, $t1
+  li $v0, 11
+  syscall
+  j exit
+  
+  notkytu:
+  la $a0, line_break
+  li $v0, 4
+  syscall
+  move $a0, $t1
+  li $v0, 11
+  syscall
+  la $a0, output2
+  li $v0, 4
+  syscall
+  
+  exit:
+   li $v0, 10
+  syscall 
+
+
