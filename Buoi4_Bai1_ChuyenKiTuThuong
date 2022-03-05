@@ -1,0 +1,52 @@
+.data
+input: .asciiz "Nhap vao mot chuoi: "
+output1: .asciiz " chuyen sang choi thuong la:   "
+str: .space 1024
+line_break: .asciiz "\n "
+
+ .text
+ main:
+ 
+  la $a0, input
+  li $v0, 4
+  syscall
+  
+  la $a0, str
+  li $a1, 1024
+  li $v0, 8
+  syscall
+  
+  #t1 chua ky tu hien hanh
+  #t2 chua dia chi cua ky tu do
+  
+  la $t2, str
+  
+  loop:
+  lb $t1, ($t2)
+  beqz $t1, exit
+  blt $t1, 'A', giuNguyen
+  bgt $t1, 'Z', giuNguyen
+  addi $t1, $t1, 0x20
+  sb $t1, ($t2)
+  
+  giuNguyen:
+  addi $t2, $t2, 1
+  j loop
+  
+  exit:
+  la $a0, output1
+  li $v0, 4
+  syscall
+  
+  la $a0, line_break
+  li $v0, 4
+  syscall
+  
+  li $v0, 4
+  la $a0, str
+  syscall
+  
+  li $v0, 10
+  syscall 
+
+
