@@ -1,0 +1,55 @@
+.data
+input1: .asciiz "Nhap so nguyen 1: "
+input2: .asciiz "Nhap so nguyen 2: "
+input3: .asciiz "Nhap phep toan (+ hoac -): "
+output: .asciiz "\nKQ: "
+output2: .asciiz "\nPhep toan khong hop le: "
+ .text
+ main:
+ #nhap a
+  la $a0, input1
+  li $v0, 4
+  syscall
+  li $v0, 5
+  syscall
+  move $t0, $v0
+ #nhap b
+  la $a0, input2
+  li $v0, 4
+  syscall
+   li $v0, 5
+  syscall
+    move $t1, $v0
+ #nhap phap toan
+  la $a0, input3
+  li $v0, 4
+  syscall
+  li $v0, 12
+  syscall
+  move $t2, $v0
+  #ss
+  bne $v0, '-', cong
+  sub $t3, $t0, $t1
+  li, $v0, 4
+  la $a0, output
+  syscall
+  li $v0, 1
+  move $a0, $t3
+  syscall
+  j exit
+  cong:
+  bne $v0, '-', khonghople
+  sub $t3, $t0, $t1
+  li, $v0, 4
+  la $a0, output
+  syscall
+  li $v0, 1
+  move $a0, $t3
+  syscall
+  j exit
+   khonghople:
+  la $a0, output2
+  li $v0, 4
+  syscall
+    exit:
+  li $v0, 10	syscall
